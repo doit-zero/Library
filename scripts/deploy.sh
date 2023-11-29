@@ -7,6 +7,9 @@ BUILD_JAR=$(ls /home/ec2-user/action/build/libs/*.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 echo "> build 파일명: $JAR_NAME" >> /home/ec2-user/action/deploy.log
 
+# 시작 시간 로그 추가
+echo "> 배포 시작 시간: $(date)" >> /home/ec2-user/action/deploy.log
+
 echo "> build 파일 복사" >> /home/ec2-user/action/deploy.log
 DEPLOY_PATH=/home/ec2-user/action/
 cp $BUILD_JAR $DEPLOY_PATH
@@ -24,9 +27,12 @@ else
 fi
 
 # JAR 파일 이름에 -plain이 없는 경우, 여기에서 직접 수정
-# 예: PLAIN_JAR_NAME=$(echo $JAR_NAME | sed 's/-plain//')
-PLAIN_JAR_NAME=$JAR_NAME
+PLAIN_JAR_NAME=$(echo $JAR_NAME | sed 's/-plain//')
+# PLAIN_JAR_NAME=$JAR_NAME
 
 DEPLOY_JAR=$DEPLOY_PATH$PLAIN_JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
 nohup java -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
+
+# 종료 시간 로그 추가
+echo "> 배포 종료 시간: $(date)" >> /home/ec2-user/action/deploy.log
