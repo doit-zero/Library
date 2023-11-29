@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# .env 파일 읽어서 환경 변수로 설정
+export $(cat /path/to/your/project/.env | xargs)
+
 BUILD_JAR=$(ls /home/ec2-user/action/build/libs/*.jar)
 JAR_NAME=$(basename $BUILD_JAR)
 echo "> build 파일명: $JAR_NAME" >> /home/ec2-user/action/deploy.log
