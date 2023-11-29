@@ -22,7 +22,6 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: |
-          cd libraryM/
           chmod +x gradlew
         shell: bash
 
