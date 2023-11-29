@@ -2,7 +2,7 @@ name: CD
 on:
   push:
     branches: [main]
-
+    
 env:
   S3_BUCKET_NAME: couple-s3
   PROJECT_NAME: LibraryM
@@ -11,6 +11,25 @@ jobs:
   deploy:
     name: Deploy to S3
     runs-on: ubuntu-latest
+
+    
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testdb
+          MYSQL_USER: testuser
+          MYSQL_PASSWORD: testpassword
+        ports:
+          - 3306:3306
+
+    env:
+      DB_HOST: localhost
+      DB_NAME: testdb
+      DB_USERNAME: testuser
+      DB_PASSWORD: testpassword
+    
 
     steps:
       - uses: actions/checkout@v2
@@ -24,6 +43,12 @@ jobs:
         run: |
           chmod +x gradlew
         shell: bash
+        
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew build
+        shell: bash        
 
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
