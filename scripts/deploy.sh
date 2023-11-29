@@ -23,6 +23,10 @@ else
   sleep 5
 fi
 
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
+# JAR 파일 이름에 -plain이 없는 경우, 여기에서 직접 수정
+# 예: PLAIN_JAR_NAME=$(echo $JAR_NAME | sed 's/-plain//')
+PLAIN_JAR_NAME=$JAR_NAME
+
+DEPLOY_JAR=$DEPLOY_PATH$PLAIN_JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
 nohup java -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
