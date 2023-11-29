@@ -33,7 +33,7 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
-        return "회원 가입 완료";
+        return "회원 가입 완료 테스트";
     }
 
 
