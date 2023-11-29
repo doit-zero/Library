@@ -32,6 +32,10 @@ PLAIN_JAR_NAME=$(echo $JAR_NAME | sed 's/-plain//')
 
 DEPLOY_JAR=$DEPLOY_PATH$PLAIN_JAR_NAME
 echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
+
+# 실행 JAR 파일의 이름 로그 추가
+echo "> 실행 JAR 파일: $PLAIN_JAR_NAME" >> /home/ec2-user/action/deploy.log
+
 nohup java -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
 
 # 종료 시간 로그 추가
